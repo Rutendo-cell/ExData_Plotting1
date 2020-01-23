@@ -1,3 +1,12 @@
+abc<-read.table("household_power_consumption.txt", header=TRUE,sep=";", skip=66630, 
+                nrows=2900, col.names=names(initial), na.strings=c("?"),
+                colClasses=c("character", "character","numeric","numeric","numeric","numeric",
+                             "numeric","numeric","numeric"))
+abc$Date<-as.Date(abc$Date, format = "%d/%m/%Y")
+abc$Time<-strptime(paste(abc$Date,abc$Time),"%F %T")
+abc<-subset(abc,abc$Date %in% as.Date(c("2007-02-01","2007-02-02")))
+
+
 par(mfcol=c(2,2), mar=c(4.5,5,2,2))
 # Plot 4.1
 plot(abc$Time,abc$Global_active_power, ylab="Global Active Power (kilowatts)", 
